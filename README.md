@@ -1,4 +1,13 @@
 # Temporal Helm Chart
+## Building helm package
+```bash
+# clone this repo
+# update the fork and git checkout the tag
+$ helm dependencies update
+$ helm package --version <the vesion> .
+$ helm repo index --url https://luxorlabs.github.io/temporalio-helm-charts/package ./package
+```
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftemporalio%2Ftemporal-helm-charts.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftemporalio%2Ftemporal-helm-charts?ref=badge_shield)
 
 Temporal is a distributed, scalable, durable, and highly available orchestration engine designed to execute asynchronous long-running business logic in a resilient way.
