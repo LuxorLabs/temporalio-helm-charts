@@ -6,6 +6,11 @@
 $ helm dependencies update
 $ helm package --version <the vesion> .
 $ helm repo index --url https://luxorlabs.github.io/temporalio-helm-charts/package ./package
+# push the package or commit to the branch
+# ensure new package is lister
+$ helm repo add luxor-temporal https://luxorlabs.github.io/temporalio-helm-charts/package
+$ helm repo update
+$ helm search repo luxor-temporal
 ```
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftemporalio%2Ftemporal-helm-charts.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftemporalio%2Ftemporal-helm-charts?ref=badge_shield)
