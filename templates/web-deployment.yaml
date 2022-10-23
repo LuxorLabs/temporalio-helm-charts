@@ -41,6 +41,11 @@ spec:
         - name: {{ .Chart.Name }}-web-config
           configMap:
             name: {{ include "temporal.componentname" (list . "web") }}-config
+        {{- if or $.Values.server.config.tls.internode.enabled $.Values.server.config.tls.frontend.enabled  }}
+        - name: mtls-cert
+          secret:
+            secretName: {{ $.Values.server.config.tls.secretName }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}-web
           image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
@@ -48,10 +53,28 @@ spec:
           env:
             - name: TEMPORAL_ADDRESS
               value: "{{ include "temporal.fullname" . }}-frontend.{{ .Release.Namespace }}.svc:{{ .Values.server.frontend.service.port }}"
+            {{- if or $.Values.server.config.tls.internode.enabled $.Values.server.config.tls.frontend.enabled  }}
+            - name: TEMPORAL_TLS_CERT_PATH
+              value: "{{ $.Values.server.config.tls.mountDir}}/tls.crt"
+            - name: TEMPORAL_TLS_KEY_PATH
+              value: "{{ $.Values.server.config.tls.mountDir}}/tls.key"
+            - name: TEMPORAL_TLS_CA_PATH
+              value: "{{ $.Values.server.config.tls.mountDir}}/ca.crt"
+            - name: TEMPORAL_TLS_ENABLE_HOST_VERIFICATION
+              value: "true"
+            - name: TEMPORAL_TLS_SERVER_NAME
+              value: "frontend.temporal.corp.luxor.tech"
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
+          {{- if or $.Values.server.config.tls.internode.enabled $.Values.server.config.tls.frontend.enabled  }}
+          volumeMounts:
+            - name: mtls-cert
+              mountPath: {{ $.Values.server.config.tls.mountDir }}
+              readOnly: true
+          {{- end }}
           resources:
             {{- toYaml .Values.web.resources | nindent 12 }}
       {{- with .Values.web.nodeSelector }}
