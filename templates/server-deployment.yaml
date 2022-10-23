@@ -136,6 +136,11 @@ spec:
               subPath: config_template.yaml
             - name: dynamic-config
               mountPath: /etc/temporal/dynamic_config
+            {{- if or $.Values.server.config.tls.internode.enabled $.Values.server.config.tls.frontend.enabled  }}
+            - name: mtls-cert
+              mountPath: {{ $.Values.server.config.tls.mountDir }}
+              readOnly: true
+            {{- end }}
             {{- if $.Values.server.additionalVolumeMounts }}
             {{- toYaml $.Values.server.additionalVolumeMounts | nindent 12}}  
             {{- end }}
@@ -159,6 +164,11 @@ spec:
             items:
             - key: dynamic_config.yaml
               path: dynamic_config.yaml
+        {{- if or $.Values.server.config.tls.internode.enabled $.Values.server.config.tls.frontend.enabled  }}
+        - name: mtls-cert
+          secret:
+            secretName: {{ $.Values.server.config.tls.secretName }}
+        {{- end }}
         {{- if $.Values.server.additionalVolumes }}
         {{- toYaml $.Values.server.additionalVolumes | nindent 8}}  
         {{- end }}
