@@ -4,6 +4,14 @@
 # clone this repo
 # update the fork and git checkout the tag
 $ helm dependencies update
+
+# to create manifest (preferred way)
+$ rm manifests.yaml
+# for staging e.g carthage
+$ helm template temporal . -f values.yaml -f values/values.staging.yaml > manifests.yaml
+$ helm template temporal . -f values.yaml -f values/values.prod.yaml > manifests.yaml
+
+# to package
 $ helm package --version <the version> .
 $ cp temporal-<the version>.tgz package
 $ helm repo index --url https://luxorlabs.github.io/temporalio-helm-charts/package ./package

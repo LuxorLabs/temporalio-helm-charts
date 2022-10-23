@@ -1,4 +1,3 @@
 /charts
 /.idea
-v.yaml
-b.yaml
+manifests.yaml

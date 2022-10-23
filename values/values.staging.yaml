@@ -1,0 +1,66 @@
+admintools:
+  image:
+    tag: 1.18.3
+web:
+  image:
+    tag: 2.8.0
+server:
+  image:
+    tag: 1.18.3
+  replicaCount: 1
+  config:
+    tls:
+      secretName: "temporal-frontend-mtls"
+      mountDir: "/mtls"
+      frontend:
+        enabled: true
+        server:
+          certFile: "/mtls/tls.crt"
+          keyFile: "/mtls/tls.key"
+          requireClientAuth: true
+          clientCaFiles:
+            - "/mtls/ca.crt"
+        client:
+          serverName: "temporal-frontend.temporal.svc.cluster.local"
+          rootCaFiles:
+            - "/mtls/ca.crt"
+    persistence:
+      default:
+        driver: "sql"
+        sql:
+          driver: "postgres"
+          port: 5432
+          database: temporal
+          user: temporal
+          existingSecret: "temporal"
+          host: lmf-postgres-primary.lmf.svc
+          maxConns: 20
+          maxConnLifetime: "1h"
+      visibility:
+        driver: "sql"
+        sql:
+          driver: "postgres"
+          port: 5432
+          database: temporal_visibility
+          user: temporal_visibility
+          existingSecret: "temporal-visibility"
+          host: lmf-postgres-primary.lmf.svc
+          maxConns: 20
+          maxConnLifetime: "1h"
+prometheus:
+  enabled: false
+grafana:
+  enabled: false
+elasticsearch:
+  enabled: false
+cassandra:
+  enabled: false
+mysql:
+  enabled: false
+postgresql:
+  enabled: true
+schema:
+  setup:
+    enabled: false
+  update:
+    enabled: false

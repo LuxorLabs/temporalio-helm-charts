@@ -1,0 +1,112 @@
+worker:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 300m
+      memory: 1Gi
+matching:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 300m
+      memory: 1Gi
+history:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 300m
+      memory: 1Gi
+frontend:
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 300m
+      memory: 1Gi
+admintools:
+  image:
+    tag: 1.18.3
+web:
+  image:
+    tag: 2.8.0
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 300m
+      memory: 1Gi
+server:
+  image:
+    tag: 1.18.3
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1Gi
+    requests:
+      cpu: 300m
+      memory: 1Gi
+  replicaCount: 1
+  config:
+    tls:
+      secretName: "temporal-frontend-mtls"
+      mountDir: "/mtls"
+      frontend:
+        enabled: true
+        server:
+          certFile: "/mtls/tls.crt"
+          keyFile: "/mtls/tls.key"
+          requireClientAuth: true
+          clientCaFiles:
+            - "/mtls/ca.crt"
+        client:
+          serverName: "frontend.temporal.corp.luxor.tech"
+          rootCaFiles:
+            - "/mtls/ca.crt"
+    persistence:
+      default:
+        driver: "sql"
+        sql:
+          driver: "postgres"
+          port: 5432
+          database: temporal
+          user: temporal
+          existingSecret: "temporal"
+          host: db-progressive-primary.default.svc
+          maxConns: 20
+          maxConnLifetime: "1h"
+      visibility:
+        driver: "sql"
+        sql:
+          driver: "postgres"
+          port: 5432
+          database: temporal_visibility
+          user: temporal_visibility
+          existingSecret: "temporal-visibility"
+          host: db-progressive-primary.default.svc
+          maxConns: 20
+          maxConnLifetime: "1h"
+prometheus:
+  enabled: false
+grafana:
+  enabled: false
+elasticsearch:
+  enabled: false
+cassandra:
+  enabled: false
+mysql:
+  enabled: false
+postgresql:
+  enabled: true
+schema:
+  setup:
+    enabled: false
+  update:
+    enabled: false
