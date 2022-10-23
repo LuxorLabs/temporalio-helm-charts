@@ -22,3 +22,7 @@
 .vscode/
 b.yaml
 v.yaml
+package
+README.md
+LICENSE
+robots.txt
