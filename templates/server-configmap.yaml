@@ -135,6 +135,16 @@ data:
             rootCaFiles:
               {{- toYaml . | nindent 12 }}
             {{- end }}
+        systemWorker:
+          certFile: {{ ternary $.Values.server.config.tls.server.certFile $.Values.server.config.tls.frontend.server.certFile (eq $.Values.server.config.tls.frontend.server.certFile "")}}
+          keyFile: {{ ternary $.Values.server.config.tls.server.keyFile $.Values.server.config.tls.frontend.server.keyFile (eq $.Values.server.config.tls.frontend.server.keyFile "")}}
+          client:
+            serverName: {{ ternary $.Values.server.config.tls.client.serverName $.Values.server.config.tls.frontend.client.serverName (eq $.Values.server.config.tls.frontend.client.serverName "")}}
+            {{ $workerCAFilesFrontend := ternary $.Values.server.config.tls.client.rootCaFiles $.Values.server.config.tls.frontend.client.rootCaFiles (eq (len $.Values.server.config.tls.frontend.client.rootCaFiles) 0) -}}
+            {{- with $workerCAFilesFrontend }}
+            rootCaFiles:
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
         {{- end }}
       {{- end }}
       membership:

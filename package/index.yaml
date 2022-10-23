@@ -3,7 +3,44 @@ entries:
   temporal:
   - apiVersion: v2
     appVersion: 1.18.0
-    created: "2022-10-23T02:03:11.746158795-07:00"
+    created: "2022-10-23T02:36:30.530313243-07:00"
+    dependencies:
+    - condition: cassandra.enabled
+      name: cassandra
+      repository: https://charts.helm.sh/incubator
+      version: 0.14.3
+    - condition: prometheus.enabled
+      name: prometheus
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 15.1.3
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.16.3
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      version: 5.0.10
+    description: Temporal is a distributed, scalable, durable, and highly available orchestration engine to execute asynchronous long-running business logic in a scalable and resilient way.
+    digest: 852e9ac210028a6899a8c9e1d05670ffd628560c94a0a41eb4c1a01d846fc7ee
+    home: https://temporal.io/
+    keywords:
+    - temporal
+    - workflow
+    - orchestration
+    maintainers:
+    - name: Temporal Technologies Inc.
+      url: https://temporal.io/
+    name: temporal
+    sources:
+    - https://github.com/temporalio/temporal
+    type: application
+    urls:
+    - https://luxorlabs.github.io/temporalio-helm-charts/package/temporal-1.18.20221024.tgz
+    version: 1.18.20221024
+  - apiVersion: v2
+    appVersion: 1.18.0
+    created: "2022-10-23T02:36:30.519206668-07:00"
     dependencies:
     - condition: cassandra.enabled
       name: cassandra
@@ -40,7 +77,7 @@ entries:
     version: 1.18.20221023
   - apiVersion: v2
     appVersion: 1.18.0
-    created: "2022-10-23T02:03:11.735655514-07:00"
+    created: "2022-10-23T02:36:30.509241068-07:00"
     dependencies:
     - condition: cassandra.enabled
       name: cassandra
@@ -77,7 +114,7 @@ entries:
     version: 1.18.0
   - apiVersion: v2
     appVersion: 1.17.5
-    created: "2022-10-23T02:03:11.725869743-07:00"
+    created: "2022-10-23T02:36:30.500927244-07:00"
     dependencies:
     - condition: cassandra.enabled
       name: cassandra
@@ -112,4 +149,4 @@ entries:
     urls:
     - https://luxorlabs.github.io/temporalio-helm-charts/package/temporal-1.17.5.tgz
     version: 1.17.5
-generated: "2022-10-23T02:03:11.717724967-07:00"
+generated: "2022-10-23T02:36:30.488988654-07:00"
