@@ -54,11 +54,11 @@ spec:
             - name: TEMPORAL_ADDRESS
               value: "{{ include "temporal.fullname" . }}-frontend.{{ .Release.Namespace }}.svc:{{ .Values.server.frontend.service.port }}"
             {{- if or $.Values.server.config.tls.internode.enabled $.Values.server.config.tls.frontend.enabled  }}
-            - name: TEMPORAL_TLS_CERT_PATH
+            - name: TEMPORAL_TLS_CERT
               value: "{{ $.Values.server.config.tls.mountDir}}/tls.crt"
-            - name: TEMPORAL_TLS_KEY_PATH
+            - name: TEMPORAL_TLS_KEY
               value: "{{ $.Values.server.config.tls.mountDir}}/tls.key"
-            - name: TEMPORAL_TLS_CA_PATH
+            - name: TEMPORAL_TLS_CA
               value: "{{ $.Values.server.config.tls.mountDir}}/ca.crt"
             - name: TEMPORAL_TLS_ENABLE_HOST_VERIFICATION
               value: "true"
