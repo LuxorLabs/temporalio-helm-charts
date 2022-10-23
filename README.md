@@ -4,7 +4,8 @@
 # clone this repo
 # update the fork and git checkout the tag
 $ helm dependencies update
-$ helm package --version <the vesion> .
+$ helm package --version <the version> .
+$ cp temporal-<the version>.tgz package
 $ helm repo index --url https://luxorlabs.github.io/temporalio-helm-charts/package ./package
 # push the package or commit to the branch
 # ensure new package is lister
